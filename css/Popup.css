@@ -1,0 +1,44 @@
+body {
+    background: #404040;
+    color: #cacaca;
+}
+
+.content {
+    width: 200px;
+}
+
+h5.found {
+    text-align: left;
+    vertical-align: central;
+    margin: 3px 0 3px 7px;
+    color: rgb(0, 180, 0);
+}
+h5.not-found {
+    color: rgb(255, 78, 78);
+    margin: 10px;
+}
+
+.video {
+    width: 150px;
+    border: none;
+    background: #636363;
+    color: #ffffff !important;
+    font-weight: 100;
+    font-size: 15px;
+    margin: 4px;
+    padding: 5px;
+    text-transform: uppercase;
+    text-decoration:none;
+    border-radius: 6px;
+    display: inline-block;
+    transition: all 0.3s ease 0s;
+}
+    .video:hover {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    letter-spacing: 3px;
+    background: rgb(44, 180, 44);
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.3s ease 0s;
+    }

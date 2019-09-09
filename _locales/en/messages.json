@@ -1,0 +1,17 @@
+{
+    "name": {
+        "message": "Video in Theater Mode V2"
+    },
+
+    "description": {
+        "message": "When watching the video, this extension is able to catch the video source, then it can have a page which contains the video element in whole view."
+    },
+
+    "default_title": {
+        "message": "Click button to watch the video"
+    },
+    
+    "first_install": {
+        "message": "The number over the chrome extension button present the number of the video. Click the button you will see the href of the video, and then click the href to open the theater mode. If you want to disable theater mode, just click the previous page button of the browser."
+    }    
+}

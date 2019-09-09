@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<head>
+    <title>Facebook影片播放器</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link href="../css/utils/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/utils/bootstrap-slider.min.css" rel="stylesheet" />
+    <script src="../js/utils/jquery-3.4.1.min.js"></script>
+    <script src="../js/utils/bootstrap.min.js"></script>
+    <script src="../js/utils/bootstrap-slider.min.js"></script>
+    
+    <link href="../css/FacebookPlayer.css" type="text/css" rel="stylesheet" />
+    <script src="../js/FacebookPlayer.js"></script>
+</head>
+<html>
+<body>
+    <div>
+        <iframe id="player" allow="encrypted-media"
+        scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
+        <div id="control">
+            <button id="Btn_ShowAndHide" class="btn btn-link" style="background-image: url('../images/hide.png')"></button>
+            <button id="Btn_Swap" class="btn btn-link" style="background-image: url('../images/swap.png')"></button>
+            <div id="controlBar">
+                <button class="btn btn-link" style="background-image: url('../images/zoom-in.png')"></button>
+                <input id="Slider" data-provide="slider" data-slider-id="resizeSlider" type="text"
+                    data-slider-min="-1" data-slider-max="1" data-slider-step="0.001" data-slider-value="0"
+                    data-slider-orientation="vertical"
+                    />
+                <button class="btn btn-link" style="background-image: url('../images/zoom-out.png')"></button>
+            </div>
+        </div>        
+    </div>
+</body>
+</html>

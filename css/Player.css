@@ -1,0 +1,42 @@
+body {
+    background: black;
+    margin: 0;
+}
+
+.videoContainer
+{
+    position:absolute;
+    height:100%;
+    width:100%;
+    overflow: hidden;
+}
+
+#player {
+    height: 100%;
+    width: 100%;
+}
+
+video:focus{
+    outline: none;
+}
+
+.video-js .vjs-time-control {
+    display: block;
+}
+
+.video-js { /* 控制條上的字體大小 */
+    font-size: 13px;
+}
+
+.video-js button {
+    outline: none;
+}
+
+.video-js.vjs-paused .vjs-big-play-button { /* 影片暫停時顯示播放按鈕 */
+    display: block;
+}
+
+.video-js .vjs-play-progress {  /* 進度條顏色 */
+    color: #ff0000;
+    background-color: #ff000041;
+}

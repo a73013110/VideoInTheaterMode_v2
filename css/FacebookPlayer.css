@@ -1,0 +1,59 @@
+body {
+    background: rgba(0, 0, 0);
+    height: 100%;
+    width: 100%;
+    position:absolute;
+    overflow: hidden;
+    margin: 0px;
+}
+
+iframe {
+    border: none;
+    overflow: hidden;
+    display: block; 
+    margin: 0 auto;
+    border: none;
+    overflow: hidden;
+}
+
+#control {
+    position: absolute;
+    top: 0px;
+    height: 100%;
+    float: left;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.6)
+}
+
+#control > * {
+    display: block;
+}
+
+#controlBar > * {
+    display: block;
+}
+
+#control > button {
+    height: 30px;
+    width: 30px;
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: block;
+}
+
+#control > #controlBar > button {
+    height: 30px;
+    width: 30px;
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#resizeSlider {
+	margin: 5px auto;
+}
+
+#resizeSlider .slider-selection {
+	background: #BABABA;
+}
