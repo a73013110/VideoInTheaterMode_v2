@@ -1,7 +1,7 @@
 
 # Video In Theater Mode Version 2
 
-- This chrome extions completely re-write from [Video In Theater Mode](https://github.com/a73013110/VideoInTheaterMode), so the implementation concept is diferent from all one.
+- This chrome extions completely re-write from [Video In Theater Mode](https://github.com/a73013110/VideoInTheaterMode), so the implementation concept is totally different from old one.
 
 - This version just take aim at the information in devtools and the Url, rather than detecting the HTML code in the page source.
 
