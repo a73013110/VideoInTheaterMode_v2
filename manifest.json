@@ -2,7 +2,7 @@
     "default_locale": "zh_TW",
     "manifest_version": 2,
     "name": "__MSG_name__",
-    "version": "1.5.1",
+    "version": "1.5.2",
 
     "description": "__MSG_description__",
     "icons": {
@@ -39,8 +39,5 @@
         "http://*/*",
         "https://*/*",
         "tabs",
-        "webRequest",
-        "webRequestBlocking",
-        "background",
-        "notifications"]
+        "webRequest"]
 }
