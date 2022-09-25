@@ -118,9 +118,14 @@ window.bgObj.prototype = {
 // 安裝事件
 chrome.runtime.onInstalled.addListener(function(details) {
     if(details.reason == "install") {   // 首次安裝
+        if(confirm(getMessage("update"))) {
+            chrome.tabs.create({ url: "https://chrome.google.com/webstore/detail/bglicehingnhimmkihplligdihgfapjf" });
+        }
         alert(getMessage("first_install"));
     }
     else if(details.reason == "update"){    // 更新
-        
+        if(confirm(getMessage("update"))) {
+            chrome.tabs.create({ url: "https://chrome.google.com/webstore/detail/bglicehingnhimmkihplligdihgfapjf" });
+        }
     }
 });

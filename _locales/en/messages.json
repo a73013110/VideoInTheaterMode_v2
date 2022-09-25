@@ -13,5 +13,9 @@
     
     "first_install": {
         "message": "The number over the chrome extension button present the number of the video. Click the button you will see the href of the video, and then click the href to open the theater mode. If you want to disable theater mode, just click the previous page button of the browser."
+    },
+    
+    "update": {
+        "message": "The new Video in Theater Mode Pro has already launched which support more than 99% of the webpage video.\nClick \"OK\" to go to the chrome webstore\nClick \"Cancel\" to pass up this wonderful extension"
     }    
 }
