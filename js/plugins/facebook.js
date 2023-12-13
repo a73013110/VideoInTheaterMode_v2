@@ -20,6 +20,6 @@ function GetFacebookUrlFromUrl(tab) {
             id = tmp[tmp.indexOf("videos")+1];
         }
         if (isNaN(parseInt(id))) return null;    // 若沒有影片id參數, 回傳null
-        return chrome.extension.getURL("./html/FacebookPlayer.html") + "?v=https://www.facebook.com/watch/?v=" + id;
+        return chrome.runtime.getURL("html/FacebookPlayer.html") + "?v=https://www.facebook.com/watch/?v=" + id;
     }
 }

@@ -5,7 +5,7 @@ function GetVideoFromNetwork(details) {
     
     // 各種格式影片
     if (extension === "m3u8") {
-        return chrome.extension.getURL("./html/Player.html") + "?v=" + details.url + "&type=application/x-mpegURL";
+        return chrome.runtime.getURL("html/Player.html") + "?v=" + details.url + "&type=application/x-mpegURL";
     }
     else if (extension === "mp4") {    
         var url = new URL(details.url);
@@ -14,7 +14,7 @@ function GetVideoFromNetwork(details) {
             url.searchParams.delete("byteend");
             return url.href;
         }    
-        return chrome.extension.getURL("./html/Player.html") + "?v=" + details.url + "&type=video/mp4";
+        return chrome.runtime.getURL("html/Player.html") + "?v=" + details.url + "&type=video/mp4";
     }
     else if (extension === "webm") {
         var url = new URL(details.url);
@@ -23,6 +23,6 @@ function GetVideoFromNetwork(details) {
             url.searchParams.delete("byteend");
             return url.href;
         }
-        return chrome.extension.getURL("./html/Player.html") + "?v=" + details.url + "&type=video/webm";
+        return chrome.runtime.getURL("html/Player.html") + "?v=" + details.url + "&type=video/webm";
     }
 }

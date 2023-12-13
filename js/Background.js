@@ -1,75 +1,14 @@
-window.onload = function () {
-    window.bg = new bgObj();    // 創建bgObj功能物件
-    // 取得所有webRequest的結果 
-    chrome.webRequest.onHeadersReceived.addListener(function (details) {
-        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-            if (tabs.length == 0) return;   // 過濾錯誤資訊
-            // 過濾特定網站的Request, page_url.hostname: 整個網域, page_url.href: 指定網站
-            var page_url = new URL(tabs[0].url);
-            if (page_url.protocol == "chrome-extension:" || page_url == undefined || 
-                page_url.hostname == "www.youtube.com" || page_url.hostname == "www.facebook.com") return
-
-            // 開始監聽
-            var url = null;
-            /* 於此數添加監聽Devtools Network資料的Plugin, 重要: 先執行特定網址的Plugin => 最後再使用預設的function: GetVideoFromNetwork() */ 
-            GetUrlFromNetwork: {
-                url = GetYoutubeUrlFromNetwork(details);
-                if (url) break GetUrlFromNetwork;
-                url = GetVimeoUrlFromNetwork(details);
-                if (url) break GetUrlFromNetwork;
-                url = GetVideoFromNetwork(details);
-            }
-
-            if (url != null) window.bg.SaveUrl( details.tabId, url );   // 若有影片網址, 儲存起來
-        });
-    }, { urls: ["<all_urls>"] });
-    
-    // 切換目前tab的事件
-    chrome.tabs.onActivated.addListener(function (info) {
-        window.bg.onActivated(info);
-    });
-
-    // set handler to tabs
-    chrome.tabs.onUpdated.addListener(function (id, info, tab) {
-        // Disalbe此插件的狀況
-        if (!id || !tab || !tab.url || ((tab.url.indexOf("http:") === -1) && (tab.url.indexOf("https:") === -1))) {
-            if (id) {
-                chrome.browserAction.disable(id);
-            }
-            return (0);
-        }
-
-        if (info && info.status && (info.status.toLowerCase() === "loading")) {            
-            chrome.browserAction.enable(id);
-            window.bg.SetTab(id);   // 儲存tab資訊
-        }
-        else if (info && info.status && (info.status.toLowerCase() === "complete")) {
-            chrome.browserAction.enable(id);
-            var url = null;
-            /* 於此數添加網頁載入完成後的Plugin */
-            GetUrlFromUrl: {
-                url = GetYoutubeUrlFromUrl(tab);
-                if (url) break GetUrlFromUrl;
-                url = GetFacebookUrlFromUrl(tab);
-                if (url) break GetUrlFromUrl;
-                url = GetVimeoUrlFromUrl(tab);
-            }
-
-            if (url != null) window.bg.SaveUrl( id, url );   // 若有影片網址, 儲存起來
-        }
-    });
-
-    // 關閉tab時, 也刪除該tab的資料
-    chrome.tabs.onRemoved.addListener(function (id, info) {
-        window.bg.RemoveTab(id);
-    });
-};
+importScripts("./plugins/video.js");
+importScripts("./plugins/youtube.js");
+importScripts("./plugins/facebook.js");
+importScripts("./plugins/vimeo.js");
+importScripts("./common/functions.js");
 
 /* work object */
-window.bgObj = function () { };
+var bgObj = function () { };
 
 /* Public methods */
-window.bgObj.prototype = {
+bgObj.prototype = {
     tabs: {},   // 儲存: urls
     active_tab: {}, // 紀錄Active Tab
 
@@ -94,11 +33,11 @@ window.bgObj.prototype = {
     SetUrlCount: function (tabId) {
         if (this.tabs[tabId] && this.tabs[tabId].urls) {
             if (this.tabs[tabId].urls.length != 0) {    // 若數量不為0
-                chrome.browserAction.setBadgeText({ text: this.tabs[tabId].urls.length.toString() }); // 設置m3u8數量
+                chrome.action.setBadgeText({ text: this.tabs[tabId].urls.length.toString() }); // 設置m3u8數量
                 return (0);
             }
         }        
-        chrome.browserAction.setBadgeText({ text: '' });    // 預設值
+        chrome.action.setBadgeText({ text: '' });    // 預設值
     },    
     onActivated: function (tab) {
         this.active_tab = tab;  // 紀錄目前Activate的tab
@@ -114,18 +53,90 @@ window.bgObj.prototype = {
     }
 };
 
+var bg = new bgObj();    // 創建bgObj功能物件
+// 取得所有webRequest的結果 
+chrome.webRequest.onHeadersReceived.addListener(function (details) {
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        if (tabs.length == 0) return;   // 過濾錯誤資訊
+        // 過濾特定網站的Request, page_url.hostname: 整個網域, page_url.href: 指定網站
+        var page_url = new URL(tabs[0].url);
+        if (page_url.protocol == "chrome-extension:" || page_url == undefined || 
+            page_url.hostname == "www.youtube.com" || page_url.hostname == "www.facebook.com") return
+
+        // 開始監聽
+        var url = null;
+        /* 於此數添加監聽Devtools Network資料的Plugin, 重要: 先執行特定網址的Plugin => 最後再使用預設的function: GetVideoFromNetwork() */ 
+        GetUrlFromNetwork: {
+            url = GetYoutubeUrlFromNetwork(details);
+            if (url) break GetUrlFromNetwork;
+            url = GetVimeoUrlFromNetwork(details);
+            if (url) break GetUrlFromNetwork;
+            url = GetVideoFromNetwork(details);
+        }
+
+        if (url != null) bg.SaveUrl( details.tabId, url );   // 若有影片網址, 儲存起來
+    });
+}, { urls: ["<all_urls>"] });
+
+// 切換目前tab的事件
+chrome.tabs.onActivated.addListener(function (info) {
+    bg.onActivated(info);
+});
+
+// set handler to tabs
+chrome.tabs.onUpdated.addListener(function (id, info, tab) {
+    // Disalbe此插件的狀況
+    if (!id || !tab || !tab.url || ((tab.url.indexOf("http:") === -1) && (tab.url.indexOf("https:") === -1))) {
+        if (id) {
+            chrome.action.disable(id);
+        }
+        return (0);
+    }
+
+    if (info && info.status && (info.status.toLowerCase() === "loading")) {            
+        chrome.action.enable(id);
+        bg.SetTab(id);   // 儲存tab資訊
+    }
+    else if (info && info.status && (info.status.toLowerCase() === "complete")) {
+        chrome.action.enable(id);
+        var url = null;
+        /* 於此數添加網頁載入完成後的Plugin */
+        GetUrlFromUrl: {
+            url = GetYoutubeUrlFromUrl(tab);
+            if (url) break GetUrlFromUrl;
+            url = GetFacebookUrlFromUrl(tab);
+            if (url) break GetUrlFromUrl;
+            url = GetVimeoUrlFromUrl(tab);
+        }
+
+        if (url != null) bg.SaveUrl( id, url );   // 若有影片網址, 儲存起來
+    }
+});
+
+// 關閉tab時, 也刪除該tab的資料
+chrome.tabs.onRemoved.addListener(function (id, info) {
+    bg.RemoveTab(id);
+});
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.target === "service-worker") {
+        if (request.typr === "getUrl") {
+            sendResponse(bg.GetUrl());
+        }
+    }
+});
 
 // 安裝事件
 chrome.runtime.onInstalled.addListener(function(details) {
     if(details.reason == "install") {   // 首次安裝
-        if(confirm(getMessage("update"))) {
-            chrome.tabs.create({ url: "https://chrome.google.com/webstore/detail/bglicehingnhimmkihplligdihgfapjf" });
-        }
-        alert(getMessage("first_install"));
+        // if(confirm(getMessage("update"))) {
+        //     chrome.tabs.create({ url: "https://chrome.google.com/webstore/detail/bglicehingnhimmkihplligdihgfapjf" });
+        // }
+        // alert(getMessage("first_install"));
     }
     else if(details.reason == "update"){    // 更新
-        if(confirm(getMessage("update"))) {
-            chrome.tabs.create({ url: "https://chrome.google.com/webstore/detail/bglicehingnhimmkihplligdihgfapjf" });
-        }
+        // if(confirm(getMessage("update"))) {
+        //     chrome.tabs.create({ url: "https://chrome.google.com/webstore/detail/bglicehingnhimmkihplligdihgfapjf" });
+        // }
     }
 });

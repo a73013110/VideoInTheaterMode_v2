@@ -1,10 +1,12 @@
 window.onload = function () {
-    // get m3u8 urls for current active tab
-    window.bg_wnd = chrome.extension.getBackgroundPage();   // 取得background.html
-    var urls = window.bg_wnd.bg.GetUrl();   // 使用background.html中background.js的get_urls()方法
-
-    // function render m3u8 urls list
-    render_urls(urls);
+    // 從service worker取得Url
+    chrome.runtime.sendMessage({
+        target: "service-worker",
+        typr: "getUrl"
+    }, (response) => {
+        // function render m3u8 urls list
+        render_urls(response);
+    })
 };
 
 function render_urls(urls) {

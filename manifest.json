@@ -1,8 +1,8 @@
 {
     "default_locale": "zh_TW",
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "__MSG_name__",
-    "version": "1.5.2",
+    "version": "1.6.1",
 
     "description": "__MSG_description__",
     "icons": {
@@ -11,14 +11,14 @@
         "128": "./images/icon128.png"
     },
 
-    "browser_action": {
+    "action": {
         "default_icon": "./images/icon128.png",
         "default_popup": "./html/Popup.html",
         "default_title": "__MSG_default_title__"
     },
     
     "commands": {
-        "_execute_browser_action": {
+        "_execute_action": {
             "suggested_key": {
               "default": "Ctrl+Shift+F",
               "mac": "MacCtrl+Shift+F"
@@ -27,17 +27,19 @@
     },
 
     "options_ui": {
-      "chrome_style": true,
       "page": "./html/Options.html"
     },
 
     "background": {
-        "page": "./html/Background.html"
+        "service_worker": "./js/Background.js"
     },
 
     "permissions": [
-        "http://*/*",
-        "https://*/*",
         "tabs",
-        "webRequest"]
+        "webRequest"
+    ],
+    
+    "host_permissions": [
+        "*://*/*"
+    ]
 }
